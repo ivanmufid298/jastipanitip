@@ -1,0 +1,53 @@
+.btn , .NoPrint 
+{
+    display: none;
+}
+
+.form-control
+{
+    border: 0px;
+}
+
+.input-group-text
+{
+    border: 0px;
+    background-color: white;
+}
+
+.table {
+    border-bottom: 2px solid;
+}
+
+.table-success{
+    border-bottom: 2px solid;
+}
+
+.d-none {
+    border-bottom: 2px solid;
+}
+
+.description-input {
+    resize: none; /* Nonaktifkan resize manual */
+    width: 100%; /* Mengatur input agar mengisi seluruh lebar kolom */
+    overflow-wrap: break-word; /* Memungkinkan teks memecah baris */
+    padding-bottom: 5px; /* Jarak dari border tabel */
+}
+
+@media print {
+    .description-input {
+        white-space: normal; /* Agar teks tetap turun ke baris berikutnya */
+        overflow: hidden; /* Hilangkan scrollbar pada cetakan */
+        height: auto; /* Sesuaikan tinggi input sesuai konten */
+        padding-bottom: 5px; /* Jarak dari border tabel */
+        box-shadow: none; /* Hapus shadow jika ada */
+    }
+    hr {
+        border-top: 2px solid black; /* Ketebalan dan warna */
+        height: 0; /* Atur height ke 0 untuk mencegah konflik */
+        margin-top: 20px; /* Sesuaikan margin */
+        margin-bottom: 20px; /* Sesuaikan margin bawah */
+    }
+    tbody tr {
+        border-bottom: 2px solid black; /* Ubah angka untuk ketebalan border */
+    }
+}

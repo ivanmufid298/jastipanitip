@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jastipanitip</title>
+
+    <!-- Logo Jastipanitip -->
+    <link rel="icon" href="assets/images/jastipanitip.ico" type="image/png">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+    <!-- CSS for Print Format -->
+    <link rel="stylesheet" media="print" href="invoiceprint.css">
+
+    <!-- CSS for Invoice -->
+    <link rel="stylesheet" href="invoice.css">
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.2.slim.js"
+        integrity="sha256-OflJKW8Z8amEUuCaflBZJ4GOg4+JnNh9JdVfoV+6biw=" crossorigin="anonymous"></script>
+
+    <!-- Invoice JS -->
+    <script src="invoice.js"></script>
+</head>
+
+<body class="p-5">
+    <div class="d-flex gap-1 justify-content-between">
+        <div>
+            <h4 class="title">Invoice</h4>
+            <div class="mb-3 d-flex align-items-center">
+                <span class="me-1 fw-bold">Invoice&nbsp;No.</span>
+                <input type="text" class="form-control fw-semibold" placeholder="Inv. No">
+            </div>
+            <div class="mb-3 d-flex align-items-center">
+                <span class="me-2 fw-bold">Invoice&nbsp;Date:</span>
+                <input type="date" class="form-control fw-semibold" placeholder="Inv. Date">
+            </div>
+        </div>
+        <div>
+            <div class="mb-3 fw-bold">
+                <span class="mb-3" style="margin-left: 12px;">Invoice to:</span>
+                <input type="text" class="form-control mt-3 fw-semibold" placeholder="Customer">
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body mt-5">
+        <table class="table">
+            <thead class="table-success">
+                <tr>
+                    <th scope="col">Description</th>
+                    <th scope="col" class="text-center">Qty</th>
+                    <th scope="col" class="text-center">Price</th>
+                    <th scope="col" class="text-center">Total</th>
+                    <th scope="col" class="NoPrint">
+                        <button type="button" class="btn btn-sm btn-success" onclick="BtnAdd()">+</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="TBody">
+                <tr id="TRow" class="d-none">
+                    <td>
+                        <textarea class="form-control description-input text-center" rows="1"></textarea>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control text-center" name="qty" onchange="Calc(this);">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control text-center" name="rate" placeholder="Rp. 0"
+                            onfocus="this.value=this.value.replace('Rp. ', '')"
+                            onblur="formatCurrency(this)" onchange="Calc(this);">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control text-center" name="amt" value="0" disabled>
+                    </td>
+                    <td class="NoPrint">
+                        <button type="button" class="btn btn-sm btn-danger" onclick="BtnDel(this)">X</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="row">
+            <div class="col">
+                <button type="button" class="btn btn-primary" onclick="GetPrint()">Print</button>
+            </div>
+            <div class="col">
+                <div class="mb-3 d-flex align-items-center gap-4">
+                    <div class="col">
+                        <span style="padding-left: 12px;">SUB&nbsp;TOTAL</span>
+                        <div class="mt-3">
+                            <span>Payment DP tgl</span>
+                            <input type="date" class="form-control fw-semibold" style="padding-left: 5px;">
+                        </div>
+                    </div>
+                    <div class="col d-flex flex-column gap-3">
+                        <input type="text" class="form-control text-end" style="padding-right: 50px;" id="FTotal" name="FTotal" disabled>
+                        <input type="text" class="form-control text-end" style="padding-right: 50px;" id="FGST" name="FGST" style="min-height: 62px;"
+                            onfocus="this.value=this.value.replace('Rp. ', '')" onblur="formatCurrency(this)"
+                            onchange="GetTotal()">
+                    </div>
+                </div>
+            </div>
+            <hr style="height: 2px; background-color: black; opacity: 3; margin-left: 12px; margin-right: 12px; width: calc(100% - 24px);">
+            <div class="col"></div>
+            <div class="col">
+                <div class="mb-3 d-flex align-items-center">
+                    <span class="me-4 fw-bold">TOTAL&nbsp;*</span>
+                    <input type="text" class="form-control text-end" style="padding-right: 50px;" id="FNet" name="FNet" disabled>
+                </div>
+            </div>
+            <hr style="height: 3px; background-color: black; opacity: 3; margin-left: 12px; margin-right: 12px; width: calc(100% - 24px);">
+        </div>
+    </div>
+
+    <div class="row" style="margin-left: 0; margin-right: 12px; width: 100%;">
+        <div class="col-6 p-0 d-flex align-items-center gap-4">
+            <div class="col">
+                <textarea class="form-control description-input text-center" rows="1"></textarea>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control text-end" style="padding-right: 50px;" id="fee" name="fee"
+                    onfocus="this.value=this.value.replace('Rp. ', '')" onblur="formatCurrency(this)"
+                    onchange="GetTotal()">
+            </div>
+        </div>
+        <div class="col-2 m-auto">
+            <span class="text-center fw-bold">TOTAL&nbsp;AMOUNT</span>
+        </div>
+        <div class="col-4 p-0 m-auto">
+            <input type="text" class="form-control text-end" style="padding-right: 50px;" id="FTot" name="FTot" disabled>
+        </div>
+    </div>
+
+    <hr style="height: 2px; background-color: black; opacity: 3;">
+    <span><strong>*Total harga belum termasuk biaya ongkir</strong></span>
+
+    <div class="row footer">
+        <div class="col">
+            <h1 class="text-thx">Thank you</h1>
+            <div class="d-flex align-items-center">
+                <span class="me-1 fw-bold">PAYMENT&nbsp;METHOD&nbsp;:</span>
+                <input type="text" class="form-control fw-semibold">
+            </div>
+            <div class="d-flex align-items-center">
+                <span class="me-1 fw-bold">Order&nbsp;:</span>
+                <input type="text" class="form-control fw-semibold">
+            </div>
+            <div class="d-flex align-items-center">
+                <span class="me-1 fw-bold">Detail&nbsp;:</span>
+                <input type="text" class="form-control fw-semibold">
+            </div>
+        </div>
+        <div class="col text-end">
+            <img width="200px" height="120px" style="margin-bottom: 100px;" src="assets/images/flower.png" alt="">
+            <h5 style="font-weight: 400;">JASTIPANITIP</h5>
+            <h5 style="font-weight: 400;">Socmed&nbsp;@jastipanitip</h5>
+            <h5 style="font-weight: 400;">0857-2384-6323</h5>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0sG1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+</body>
+
+</html>

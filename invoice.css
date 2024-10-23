@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'TitleFont';
+    src: url('assets/font/Catchye.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ThxFont';
+    src: url('assets/font/Freesyle_Script.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.title {
+    font-family: 'TitleFont', serif;
+    font-size: 3.125em;
+    font-weight: 200;
+}
+
+.text-thx {
+    font-family: 'ThxFont', serif;
+    font-size: 3.125em;
+    font-weight: 200;
+}
+
+.input-group-text {
+    width: 85px;
+ }     
+
+ .footer {
+    margin-top: 100px;
+ }
