@@ -34,12 +34,20 @@ function Calc(v) {
 
     var qty = document.getElementsByName("qty")[index].value.replace(/[^\d]/g, ''); // Hanya ambil angka
     var rate = document.getElementsByName("rate")[index].value.replace(/[^\d]/g, ''); // Hanya ambil angka
+    var fee = document.getElementsByName("fee")[index].value.replace(/[^\d]/g, ''); // Ambil angka dari elemen fee
 
-    var amt = qty * rate;
+    // Pastikan qty, rate, dan fee diubah ke angka
+    qty = parseInt(qty) || 0;
+    rate = parseInt(rate) || 0;
+    fee = parseInt(fee) || 0;
+
+    // Hitung jumlah
+    var amt = (qty * rate) + fee;
     document.getElementsByName("amt")[index].value = 'Rp. ' + amt.toLocaleString(); // Tambahkan Rp dan format angka
 
     GetTotal();
 }
+
 
 function formatCurrency(input) {
     // Mengambil hanya angka dari input

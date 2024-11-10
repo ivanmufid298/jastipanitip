@@ -31,19 +31,19 @@
     <div class="d-flex gap-1 justify-content-between">
         <div>
             <h4 class="title">Invoice</h4>
-            <div class="mb-3 d-flex align-items-center">
-                <span class="me-1 fw-bold">Invoice&nbsp;No.</span>
-                <input type="text" class="form-control fw-semibold" placeholder="Inv. No">
+            <div class="mb-1 d-flex align-items-center">
+                <span class="me-1 invoice">Invoice&nbsp;No.</span>
+                <input type="text" class="form-control fw-semibold">
             </div>
             <div class="mb-3 d-flex align-items-center">
-                <span class="me-2 fw-bold">Invoice&nbsp;Date:</span>
-                <input type="date" class="form-control fw-semibold" placeholder="Inv. Date">
+                <span class="me-2 invoice">Invoice&nbsp;Date:</span>
+                <input type="date" class="form-control">
             </div>
         </div>
         <div>
             <div class="mb-3 fw-bold">
-                <span class="mb-3" style="margin-left: 12px;">Invoice to:</span>
-                <input type="text" class="form-control mt-3 fw-semibold" placeholder="Customer">
+                <span class="mb-1 invoice" style="margin-left: 12px;">Invoice to:</span>
+                <input type="text" class="form-control fw-semibold customer">
             </div>
         </div>
     </div>
@@ -55,6 +55,7 @@
                     <th scope="col">Description</th>
                     <th scope="col" class="text-center">Qty</th>
                     <th scope="col" class="text-center">Price</th>
+                    <th scope="col" class="text-center">Fee</th>
                     <th scope="col" class="text-center">Total</th>
                     <th scope="col" class="NoPrint">
                         <button type="button" class="btn btn-sm btn-success" onclick="BtnAdd()">+</button>
@@ -71,6 +72,11 @@
                     </td>
                     <td>
                         <input type="text" class="form-control text-center" name="rate" placeholder="Rp. 0"
+                            onfocus="this.value=this.value.replace('Rp. ', '')"
+                            onblur="formatCurrency(this)" onchange="Calc(this);">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control text-center" name="fee" placeholder="Rp. 0"
                             onfocus="this.value=this.value.replace('Rp. ', '')"
                             onblur="formatCurrency(this)" onchange="Calc(this);">
                     </td>
@@ -140,7 +146,7 @@
     <span><strong>*Total harga belum termasuk biaya ongkir</strong></span>
 
     <div class="row footer">
-        <div class="col">
+        <div class="col" style="margin-top: 80px;">
             <h1 class="text-thx">Thank you</h1>
             <div class="d-flex align-items-center">
                 <span class="me-1 fw-bold">PAYMENT&nbsp;METHOD&nbsp;:</span>
@@ -156,7 +162,7 @@
             </div>
         </div>
         <div class="col text-end">
-            <img width="200px" height="120px" style="margin-bottom: 100px;" src="assets/images/flower.png" alt="">
+            <img width="200px" height="120px" style="margin-bottom: 25px;" src="assets/images/flower.png" alt="">
             <h5 style="font-weight: 400;">JASTIPANITIP</h5>
             <h5 style="font-weight: 400;">Socmed&nbsp;@jastipanitip</h5>
             <h5 style="font-weight: 400;">0857-2384-6323</h5>

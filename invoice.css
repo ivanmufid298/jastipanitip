@@ -12,15 +12,32 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Customer';
+    src: url('assets/font/Westbourne_Serif_Italic.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 .title {
     font-family: 'TitleFont', serif;
-    font-size: 3.125em;
+    font-size: 5em;
     font-weight: 200;
+}
+
+.invoice {
+    font-size: 1.25em;
 }
 
 .text-thx {
     font-family: 'ThxFont', serif;
     font-size: 3.125em;
+    font-weight: 200;
+}
+
+.customer {
+    font-family: 'Customer', serif;
+    font-size: 1.5em;
     font-weight: 200;
 }
 
