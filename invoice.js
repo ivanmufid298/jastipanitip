@@ -63,6 +63,15 @@ function formatCurrency(input) {
     input.value = 'Rp. ' + parseInt(value).toLocaleString();
 }
 
+function showNewInputs() {
+    const inputContainers = document.querySelectorAll(".new-input-container");
+    inputContainers.forEach(container => {
+        // Toggle visibility
+        container.style.display = container.style.display === "none" ? "block" : "none";
+    });
+    GetTotal(); // Update total setiap kali tombol diklik
+}
+
 function GetTotal() {
     /* Footer Calculation */
     var sum = 0;
@@ -77,29 +86,25 @@ function GetTotal() {
     // Update subtotal
     document.getElementById("FTotal").value = 'Rp. ' + sum.toLocaleString();
 
-    // Ambil nilai GST, admin, dan fee, lalu hitung total bersih
+    // Ambil nilai GST dan fee, lalu hitung total bersih
     var gst = document.getElementById("FGST").value.replace(/[^\d]/g, '') || 0;
-    var adm = document.getElementById("Fadmin").value.replace(/[^\d]/g, '') || 0;
     var fee = document.getElementById("fee").value.replace(/[^\d]/g, '') || 0;
 
     // Pastikan semua nilai dikonversi ke angka
     gst = Number(gst);
-    adm = Number(adm);
     fee = Number(fee);
 
-    // Hitung net dengan mengurangi GST dan menambahkan admin fee
-    var net = sum - gst + adm;
+    // Cek apakah elemen Fadmin ditampilkan
+    var adminValue = 0;
+    const adminContainer = document.getElementById("Fadmin").parentElement;
+    if (adminContainer.style.display !== "none") {
+        adminValue = Number(document.getElementById("Fadmin").value.replace(/[^\d]/g, '')) || 0;
+    }
+
+    // Hitung net dengan menambahkan admin jika ditampilkan
+    var net = sum - gst + adminValue;
     document.getElementById("FNet").value = 'Rp. ' + net.toLocaleString();
 
     // Hitung total akhir
     document.getElementById("FTot").value = 'Rp. ' + (net + fee).toLocaleString();
-}
-
-
-function showNewInputs() {
-    const inputContainers = document.querySelectorAll(".new-input-container");
-    inputContainers.forEach(container => {
-        // Toggle visibility
-        container.style.display = container.style.display === "none" ? "block" : "none";
-    });
 }
