@@ -77,14 +77,29 @@ function GetTotal() {
     // Update subtotal
     document.getElementById("FTotal").value = 'Rp. ' + sum.toLocaleString();
 
-    // Ambil nilai GST dan hitung net
-    var gst = document.getElementById("FGST").value.replace(/[^\d]/g, ''); // Ambil nilai bersih dari FGST
-    var net = sum - Number(gst);
+    // Ambil nilai GST, admin, dan fee, lalu hitung total bersih
+    var gst = document.getElementById("FGST").value.replace(/[^\d]/g, '') || 0;
+    var adm = document.getElementById("Fadmin").value.replace(/[^\d]/g, '') || 0;
+    var fee = document.getElementById("fee").value.replace(/[^\d]/g, '') || 0;
+
+    // Pastikan semua nilai dikonversi ke angka
+    gst = Number(gst);
+    adm = Number(adm);
+    fee = Number(fee);
+
+    // Hitung net dengan mengurangi GST dan menambahkan admin fee
+    var net = sum - gst + adm;
     document.getElementById("FNet").value = 'Rp. ' + net.toLocaleString();
 
-    // Ambil nilai fee dan hitung total akhir
-    var fee = document.getElementById("fee").value.replace(/[^\d]/g, '');
-    document.getElementById("FTot").value = 'Rp. ' + (Number(fee) + net).toLocaleString();
+    // Hitung total akhir
+    document.getElementById("FTot").value = 'Rp. ' + (net + fee).toLocaleString();
 }
 
 
+function showNewInputs() {
+    const inputContainers = document.querySelectorAll(".new-input-container");
+    inputContainers.forEach(container => {
+        // Toggle visibility
+        container.style.display = container.style.display === "none" ? "block" : "none";
+    });
+}
